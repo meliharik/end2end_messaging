@@ -40,9 +40,9 @@ class _QAScreenState extends ConsumerState<QAScreen> {
   Widget get _getBody => SingleChildScrollView(
         child: Column(
           children: [
-            SpaceHelper.boslukHeight(context, 0.03),
+            SpaceHelper.height(context, 0.03),
             _aciklamaText,
-            SpaceHelper.boslukHeight(context, 0.03),
+            SpaceHelper.height(context, 0.03),
             _listTile(
                 title: "What is Securely?",
                 subtitle:
@@ -78,7 +78,7 @@ class _QAScreenState extends ConsumerState<QAScreen> {
                 title: "What is Firebase Firestore?",
                 subtitle:
                     "Firebase Firestore is a NoSQL document database that lets you easily store, sync, and query data for your mobile and web apps - at global scale."),
-            SpaceHelper.boslukHeight(context, 0.2),
+            SpaceHelper.height(context, 0.2),
           ],
         ),
       );
@@ -129,7 +129,7 @@ class _QAScreenState extends ConsumerState<QAScreen> {
                 color: Colors.white,
               ),
             ),
-            SpaceHelper.boslukHeight(context, 0.01),
+            SpaceHelper.height(context, 0.01),
             Text(
               'You can find answers to frequently asked questions here.',
               textAlign: TextAlign.start,

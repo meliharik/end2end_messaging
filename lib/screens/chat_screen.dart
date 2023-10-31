@@ -167,7 +167,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           controller: scrollController,
                           itemCount: dateList.length,
                           separatorBuilder: (context, index) {
-                            return SpaceHelper.boslukHeight(context, 0.03);
+                            return SpaceHelper.height(context, 0.03);
                           },
                           shrinkWrap: true,
                           padding: const EdgeInsets.symmetric(
@@ -212,8 +212,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                 ListView.separated(
                                   physics: const BouncingScrollPhysics(),
                                   separatorBuilder: (context, index) {
-                                    return SpaceHelper.boslukHeight(
-                                        context, 0.03);
+                                    return SpaceHelper.height(context, 0.03);
                                   },
                                   shrinkWrap: true,
                                   reverse: true,

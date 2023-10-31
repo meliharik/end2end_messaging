@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // return cupertino tabbar with bottomnavigationbar and appbar
+    
     return CupertinoTabScaffold(
       backgroundColor: CustomColors.black,
       tabBar: CupertinoTabBar(
@@ -63,11 +63,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             icon: Icon(CupertinoIcons.chat_bubble_2),
             label: 'Chats',
           ),
-          // BottomNavigationBarItem(
-          //   activeIcon: Icon(CupertinoIcons.person_2_fill),
-          //   icon: Icon(CupertinoIcons.person_2),
-          //   label: 'Groups',
-          // ),
           BottomNavigationBarItem(
             activeIcon: Icon(CupertinoIcons.group_solid),
             icon: Icon(CupertinoIcons.group),
@@ -84,10 +79,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         switch (index) {
           case 0:
             return const ChatsPage();
-          // case 1:
-          //   return const Center(
-          //     child: Text('Groups'),
-          //   );
           case 1:
             return const PeopleScreen();
 

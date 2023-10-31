@@ -24,148 +24,160 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CustomColors.black,
-      navigationBar: CupertinoNavigationBar(
-        previousPageTitle: 'Settings',
-        backgroundColor: CustomColors.black,
-        border: Border(
-          bottom: BorderSide(
-            color: CustomColors.grey,
-            width: 0.0,
-          ),
+      navigationBar: navBar(),
+      child: Column(
+        children: [
+          publicKeyTile(context),
+          SpaceHelper.height(context, 0.02),
+          privateKeyTile(context),
+        ],
+      ),
+    );
+  }
+
+  Padding privateKeyTile(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomColors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        middle: Text(
-          'Privacy',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
+        child: Material(
+          color: Colors.transparent,
+          child: ListTile(
+            onTap: () async {
+              var privateKey = await storage.read(key: "pri_key");
+              showCupertinoDialog(
+                context: context,
+                builder: (context) {
+                  return CupertinoAlertDialog(
+                    title: Text(
+                      'Your private key',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    content: SingleChildScrollView(
+                      child: Text(
+                        privateKey!,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Close',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            title: Text(
+              'View your private key',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
+            ),
+            subtitle: Text(
+              'Do not share this key with anyone!',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w400,
+                color: Colors.redAccent,
+              ),
+            ),
           ),
         ),
       ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: CustomColors.grey.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: ListTile(
-                  onTap: () async {
-                    showCupertinoDialog(
-                      context: context,
-                      builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: Text(
-                            'Your public key',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          content: SingleChildScrollView(
-                            child: Text(
-                              widget.user.publicKey,
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          actions: [
-                            CupertinoDialogAction(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                'Close',
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  title: Text(
-                    'View your public key',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+    );
+  }
+
+  Padding publicKeyTile(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomColors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: ListTile(
+            onTap: () async {
+              showCupertinoDialog(
+                context: context,
+                builder: (context) {
+                  return CupertinoAlertDialog(
+                    title: Text(
+                      'Your public key',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                ),
+                    content: SingleChildScrollView(
+                      child: Text(
+                        widget.user.publicKey,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Close',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            title: Text(
+              'View your public key',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
               ),
             ),
           ),
-          SpaceHelper.boslukHeight(context, 0.02),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: CustomColors.grey.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: ListTile(
-                  onTap: () async {
-                    var privateKey = await storage.read(key: "pri_key");
-                    showCupertinoDialog(
-                      context: context,
-                      builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: Text(
-                            'Your private key',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          content: SingleChildScrollView(
-                            child: Text(
-                              privateKey!,
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          actions: [
-                            CupertinoDialogAction(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                'Close',
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  title: Text(
-                    'View your private key',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'Do not share this key with anyone!',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.redAccent,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  CupertinoNavigationBar navBar() {
+    return CupertinoNavigationBar(
+      previousPageTitle: 'Settings',
+      backgroundColor: CustomColors.black,
+      border: Border(
+        bottom: BorderSide(
+          color: CustomColors.grey,
+          width: 0.0,
+        ),
+      ),
+      middle: Text(
+        'Privacy',
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }

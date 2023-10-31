@@ -94,7 +94,7 @@ class _PeopleScreenState extends ConsumerState<PeopleScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SpaceHelper.boslukHeight(context, 0.02),
+                          SpaceHelper.height(context, 0.02),
                           Text(
                             'You can invite your friends to use this app',
                             textAlign: TextAlign.center,
@@ -123,7 +123,7 @@ class _PeopleScreenState extends ConsumerState<PeopleScreen> {
 
                     return Column(
                       children: [
-                        SpaceHelper.boslukHeight(context, 0.02),
+                        SpaceHelper.height(context, 0.02),
                         Material(
                           color: Colors.transparent,
                           child: Padding(

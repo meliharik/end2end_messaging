@@ -125,7 +125,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
                                     ),
                                   ),
                                 ),
-                                SpaceHelper.boslukHeight(context, 0.02),
+                                SpaceHelper.height(context, 0.02),
                                 Text(
                                   'Start a new chat in People section',
                                   textAlign: TextAlign.center,

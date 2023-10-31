@@ -34,7 +34,6 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
-  // TODO: open
   debugPrint('initScreen $initScreen');
 
   runApp(const ProviderScope(child: MyApp()));

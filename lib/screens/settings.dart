@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:end2end_messaging/helpers/space.dart';
@@ -60,337 +60,21 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             backgroundColor: CustomColors.black,
             child: CustomScrollView(
               slivers: [
-                CupertinoSliverNavigationBar(
-                  // bottom border grey
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CustomColors.black,
-                      width: 0.0,
-                    ),
-                  ),
-                  backgroundColor: CustomColors.black,
-                  largeTitle: Text(
-                    "Settings",
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                navBar(),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => EditProfileScreen(
-                                  user: user,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: CustomColors.grey,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: ListTile(
-                                trailing: Icon(
-                                  CupertinoIcons.chevron_right,
-                                  color: CupertinoColors.white.withOpacity(0.5),
-                                  size: MediaQuery.of(context).size.width / 20,
-                                ),
-                                isThreeLine: false,
-                                leading: CircleAvatar(
-                                  radius:
-                                      MediaQuery.of(context).size.width / 15,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      user.photoURL,
-                                      fit: BoxFit.cover,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      height:
-                                          MediaQuery.of(context).size.width / 2,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const Icon(
-                                          Icons.person,
-                                          color: Colors.black,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                title: Text(
-                                  user.displayName,
-                                  style: GoogleFonts.poppins(
-                                    color: CupertinoColors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  user.description.length > 30
-                                      ? '${user.description.substring(0, 26)}...'
-                                      : user.description,
-                                  style: GoogleFonts.poppins(
-                                    color: CupertinoColors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SpaceHelper.boslukHeight(context, 0.02),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: CustomColors.grey,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Column(
-                            children: [
-                              Material(
-                                color: Colors.transparent,
-                                child: ListTile(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => PrivacyScreen(
-                                          user: user,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  trailing: Icon(
-                                    CupertinoIcons.chevron_right,
-                                    color:
-                                        CupertinoColors.white.withOpacity(0.5),
-                                    size:
-                                        MediaQuery.of(context).size.width / 20,
-                                  ),
-                                  isThreeLine: false,
-                                  leading: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      CupertinoIcons.lock,
-                                      color: CupertinoColors.white,
-                                      size: MediaQuery.of(context).size.width /
-                                          20,
-                                    ),
-                                  ),
-                                  title: Text(
-                                    'Privacy',
-                                    style: GoogleFonts.poppins(
-                                      color: CupertinoColors.white,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              25,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Divider(
-                                endIndent:
-                                    MediaQuery.of(context).size.width / 10,
-                                indent: MediaQuery.of(context).size.width / 10,
-                                color: Colors.grey,
-                              ),
-                              Material(
-                                color: Colors.transparent,
-                                child: ListTile(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => HowAppWorkScreen(
-                                          user: user,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  minVerticalPadding: 0.0,
-                                  trailing: Icon(
-                                    CupertinoIcons.chevron_right,
-                                    color:
-                                        CupertinoColors.white.withOpacity(0.5),
-                                    size:
-                                        MediaQuery.of(context).size.width / 20,
-                                  ),
-                                  isThreeLine: false,
-                                  leading: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      CupertinoIcons.app_badge,
-                                      color: CupertinoColors.white,
-                                      size: MediaQuery.of(context).size.width /
-                                          20,
-                                    ),
-                                  ),
-                                  title: Text(
-                                    'How does Securely work?',
-                                    style: GoogleFonts.poppins(
-                                      color: CupertinoColors.white,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              25,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SpaceHelper.boslukHeight(context, 0.02),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: CustomColors.grey,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => const AboutUsPage(),
-                                  ),
-                                );
-                              },
-                              trailing: Icon(
-                                CupertinoIcons.chevron_right,
-                                color: CupertinoColors.white.withOpacity(0.5),
-                                size: MediaQuery.of(context).size.width / 20,
-                              ),
-                              isThreeLine: false,
-                              leading: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  CupertinoIcons.person,
-                                  color: CupertinoColors.white,
-                                  size: MediaQuery.of(context).size.width / 20,
-                                ),
-                              ),
-                              title: Text(
-                                'About Us',
-                                style: GoogleFonts.poppins(
-                                  color: CupertinoColors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width / 25,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SpaceHelper.boslukHeight(context, 0.02),
+                      imgAndNameContainer(context, user),
+                      SpaceHelper.height(context, 0.02),
+                      privacySection(context, user),
+                      SpaceHelper.height(context, 0.02),
+                      aboutUsSection(context),
+                      SpaceHelper.height(context, 0.02),
                       // help
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: CustomColors.grey,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: ListTile(
-                              onLongPress: () async {
-                                await storage.deleteAll();
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.clear();
-                                await FirebaseAuth.instance.signOut();
-
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) =>
-                                        const EnterNumberPage(),
-                                  ),
-                                  (route) => false,
-                                );
-                              },
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => const QAScreen(),
-                                  ),
-                                );
-                              },
-                              trailing: Icon(
-                                CupertinoIcons.chevron_right,
-                                color: CupertinoColors.white.withOpacity(0.5),
-                                size: MediaQuery.of(context).size.width / 20,
-                              ),
-                              isThreeLine: false,
-                              leading: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  CupertinoIcons.question_circle,
-                                  color: CupertinoColors.white,
-                                  size: MediaQuery.of(context).size.width / 20,
-                                ),
-                              ),
-                              title: Text(
-                                'Q/A',
-                                style: GoogleFonts.poppins(
-                                  color: CupertinoColors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width / 25,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SpaceHelper.boslukHeight(context, 0.02),
-                      Column(
-                        children: [
-                          Text(
-                            'Securely',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.04,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            'Version $version ($buildNumber)',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white38,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.035,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SpaceHelper.boslukHeight(context, 0.2),
+                      q_aSection(context),
+                      SpaceHelper.height(context, 0.02),
+                      versionText(context),
+                      SpaceHelper.height(context, 0.2),
                     ],
                   ),
                 ),
@@ -415,6 +99,325 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           child: CupertinoActivityIndicator(),
         );
       },
+    );
+  }
+
+  Column versionText(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          'Securely',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Text(
+          'Version $version ($buildNumber)',
+          style: GoogleFonts.poppins(
+            color: Colors.white38,
+            fontSize: MediaQuery.of(context).size.width * 0.035,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding q_aSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: CustomColors.grey,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: ListTile(
+            onLongPress: () async {
+              await storage.deleteAll();
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+              await FirebaseAuth.instance.signOut();
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => const EnterNumberPage(),
+                ),
+                (route) => false,
+              );
+            },
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => const QAScreen(),
+                ),
+              );
+            },
+            trailing: Icon(
+              CupertinoIcons.chevron_right,
+              color: CupertinoColors.white.withOpacity(0.5),
+              size: MediaQuery.of(context).size.width / 20,
+            ),
+            isThreeLine: false,
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                CupertinoIcons.question_circle,
+                color: CupertinoColors.white,
+                size: MediaQuery.of(context).size.width / 20,
+              ),
+            ),
+            title: Text(
+              'Q/A',
+              style: GoogleFonts.poppins(
+                color: CupertinoColors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: MediaQuery.of(context).size.width / 25,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding aboutUsSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: CustomColors.grey,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => const AboutUsPage(),
+                ),
+              );
+            },
+            trailing: Icon(
+              CupertinoIcons.chevron_right,
+              color: CupertinoColors.white.withOpacity(0.5),
+              size: MediaQuery.of(context).size.width / 20,
+            ),
+            isThreeLine: false,
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                CupertinoIcons.person,
+                color: CupertinoColors.white,
+                size: MediaQuery.of(context).size.width / 20,
+              ),
+            ),
+            title: Text(
+              'About Us',
+              style: GoogleFonts.poppins(
+                color: CupertinoColors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: MediaQuery.of(context).size.width / 25,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding privacySection(BuildContext context, FirestoreUser user) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: CustomColors.grey,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Column(
+          children: [
+            Material(
+              color: Colors.transparent,
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => PrivacyScreen(
+                        user: user,
+                      ),
+                    ),
+                  );
+                },
+                trailing: Icon(
+                  CupertinoIcons.chevron_right,
+                  color: CupertinoColors.white.withOpacity(0.5),
+                  size: MediaQuery.of(context).size.width / 20,
+                ),
+                isThreeLine: false,
+                leading: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    CupertinoIcons.lock,
+                    color: CupertinoColors.white,
+                    size: MediaQuery.of(context).size.width / 20,
+                  ),
+                ),
+                title: Text(
+                  'Privacy',
+                  style: GoogleFonts.poppins(
+                    color: CupertinoColors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
+                ),
+              ),
+            ),
+            Divider(
+              endIndent: MediaQuery.of(context).size.width / 10,
+              indent: MediaQuery.of(context).size.width / 10,
+              color: Colors.grey,
+            ),
+            Material(
+              color: Colors.transparent,
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => HowAppWorkScreen(
+                        user: user,
+                      ),
+                    ),
+                  );
+                },
+                minVerticalPadding: 0.0,
+                trailing: Icon(
+                  CupertinoIcons.chevron_right,
+                  color: CupertinoColors.white.withOpacity(0.5),
+                  size: MediaQuery.of(context).size.width / 20,
+                ),
+                isThreeLine: false,
+                leading: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    CupertinoIcons.app_badge,
+                    color: CupertinoColors.white,
+                    size: MediaQuery.of(context).size.width / 20,
+                  ),
+                ),
+                title: Text(
+                  'How does Securely work?',
+                  style: GoogleFonts.poppins(
+                    color: CupertinoColors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding imgAndNameContainer(BuildContext context, FirestoreUser user) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => EditProfileScreen(
+                user: user,
+              ),
+            ),
+          );
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: CustomColors.grey,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: ListTile(
+              trailing: Icon(
+                CupertinoIcons.chevron_right,
+                color: CupertinoColors.white.withOpacity(0.5),
+                size: MediaQuery.of(context).size.width / 20,
+              ),
+              isThreeLine: false,
+              leading: CircleAvatar(
+                radius: MediaQuery.of(context).size.width / 15,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    user.photoURL,
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: MediaQuery.of(context).size.width / 2,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.person,
+                        color: Colors.black,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              title: Text(
+                user.displayName,
+                style: GoogleFonts.poppins(
+                  color: CupertinoColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                user.description.length > 30
+                    ? '${user.description.substring(0, 26)}...'
+                    : user.description,
+                style: GoogleFonts.poppins(
+                  color: CupertinoColors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  CupertinoSliverNavigationBar navBar() {
+    return CupertinoSliverNavigationBar(
+      // bottom border grey
+      border: Border(
+        bottom: BorderSide(
+          color: CustomColors.black,
+          width: 0.0,
+        ),
+      ),
+      backgroundColor: CustomColors.black,
+      largeTitle: Text(
+        "Settings",
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

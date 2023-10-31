@@ -58,120 +58,22 @@ class _EditProfilePageState extends ConsumerState<CreateProfilePage> {
         children: [
           CupertinoPageScaffold(
             backgroundColor: CustomColors.black,
-            navigationBar: CupertinoNavigationBar(
-              backgroundColor: CustomColors.black,
-              border: Border.all(
-                color: CustomColors.black,
-                width: 0,
-              ),
-              middle: Text(
-                'Create Profile',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            navigationBar: navBar(),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(
                     height: 20,
                   ),
-                  Material(
-                    color: Colors.transparent,
-                    child: profilePhoto,
-                  ),
+                  photo(),
                   const SizedBox(
                     height: 40,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CupertinoTextField(
-                      controller: nameController,
-                      onTap: () {
-                        setState(() {
-                          isNameTapped = true;
-                          isStatusTapped = false;
-                        });
-                      },
-                      onTapOutside: (_) {
-                        FocusScope.of(context).unfocus();
-                        setState(() {
-                          isNameTapped = false;
-                          isStatusTapped = false;
-                        });
-                      },
-                      cursorColor: CustomColors.primaryColor,
-                      padding: const EdgeInsets.all(15.0),
-                      placeholder: 'Name',
-                      placeholderStyle: GoogleFonts.poppins(
-                        color: Colors.white.withOpacity(0.5),
-                        fontWeight: FontWeight.w400,
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                      ),
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: CustomColors.black,
-                        border: Border.all(
-                          color: isNameTapped
-                              ? CustomColors.primaryColor
-                              : CustomColors.grey,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                  ),
+                  nameField(context),
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CupertinoTextField(
-                      controller: statusController,
-                      onTap: () {
-                        setState(() {
-                          isStatusTapped = true;
-                          isNameTapped = false;
-                        });
-                      },
-                      onTapOutside: (_) {
-                        FocusScope.of(context).unfocus();
-                        setState(() {
-                          isStatusTapped = false;
-                          isNameTapped = false;
-                        });
-                      },
-                      cursorColor: CustomColors.primaryColor,
-                      padding: const EdgeInsets.all(15.0),
-                      placeholder: 'About',
-                      placeholderStyle: GoogleFonts.poppins(
-                        color: Colors.white.withOpacity(0.5),
-                        fontWeight: FontWeight.w400,
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                      ),
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: CustomColors.black,
-                        border: Border.all(
-                          color: isStatusTapped
-                              ? CustomColors.primaryColor
-                              : CustomColors.grey,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                  ),
+                  statusField(context),
                   const SizedBox(
                     height: 10,
                   ),
@@ -187,290 +89,33 @@ class _EditProfilePageState extends ConsumerState<CreateProfilePage> {
                           width: 20,
                         ),
                         // chip with icon
-                        CupertinoButton(
-                          onPressed: () {
-                            setState(() {
-                              statusController.text = 'Available';
-                            });
-                          },
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.black,
-                              border: Border.all(
-                                color: CustomColors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.circle_fill,
-                                  color: CustomColors.primaryColor,
-                                  size: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  ' Available',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        defaultStatus(context, 'Available'),
                         const SizedBox(
                           width: 10,
                         ),
                         // chip with icon
-                        CupertinoButton(
-                          onPressed: () {
-                            setState(() {
-                              statusController.text = 'Busy';
-                            });
-                          },
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.black,
-                              border: Border.all(
-                                color: CustomColors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.circle_fill,
-                                  color: CustomColors.primaryColor,
-                                  size: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  ' Busy',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        defaultStatus(context, 'Busy'),
                         const SizedBox(
                           width: 10,
                         ),
                         // chip with icon
-                        CupertinoButton(
-                          onPressed: () {
-                            setState(() {
-                              statusController.text = ' At school';
-                            });
-                          },
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.black,
-                              border: Border.all(
-                                color: CustomColors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.circle_fill,
-                                  color: CustomColors.primaryColor,
-                                  size: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  ' At school',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        defaultStatus(context, 'At school'),
                         const SizedBox(
                           width: 10,
                         ),
                         // chip with icon
-                        CupertinoButton(
-                          onPressed: () {
-                            setState(() {
-                              statusController.text = 'At the movies';
-                            });
-                          },
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.black,
-                              border: Border.all(
-                                color: CustomColors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.circle_fill,
-                                  color: CustomColors.primaryColor,
-                                  size: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  ' At the movies',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        defaultStatus(context, 'At the movies'),
                         const SizedBox(
                           width: 10,
                         ),
                         // chip with icon
-                        CupertinoButton(
-                          onPressed: () {
-                            setState(() {
-                              statusController.text = 'At the gym';
-                            });
-                          },
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.black,
-                              border: Border.all(
-                                color: CustomColors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.circle_fill,
-                                  color: CustomColors.primaryColor,
-                                  size: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  ' At the gym',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        defaultStatus(context, 'At the gym'),
                         const SizedBox(
                           width: 10,
                         ),
+
                         // chip with icon
-                        CupertinoButton(
-                          onPressed: () {
-                            setState(() {
-                              statusController.text = 'Making Apps  ;)';
-                            });
-                          },
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.black,
-                              border: Border.all(
-                                color: CustomColors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.circle_fill,
-                                  color: CustomColors.primaryColor,
-                                  size: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  ' Making Apps  ;)',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        defaultStatus(context, 'Making apps ;)'),
                         const SizedBox(
                           width: 20,
                         ),
@@ -480,36 +125,7 @@ class _EditProfilePageState extends ConsumerState<CreateProfilePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CupertinoButton(
-                            onPressed: () {
-                              if (nameController.text.isEmpty) {
-                                DialogHelper().cupertinoDialog(
-                                  title: 'Error',
-                                  subtitle: 'Name cannot be empty.',
-                                );
-                                return;
-                              }
-                              save();
-                            },
-                            color: CustomColors.primaryColor,
-                            child: Text(
-                              'Save',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  saveBtn(),
                 ],
               ),
             ),
@@ -522,6 +138,195 @@ class _EditProfilePageState extends ConsumerState<CreateProfilePage> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Padding saveBtn() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          Expanded(
+            child: CupertinoButton(
+              onPressed: () {
+                if (nameController.text.isEmpty) {
+                  DialogHelper().cupertinoDialog(
+                    title: 'Error',
+                    subtitle: 'Name cannot be empty.',
+                  );
+                  return;
+                }
+                save();
+              },
+              color: CustomColors.primaryColor,
+              child: Text(
+                'Save',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  CupertinoButton defaultStatus(BuildContext context, String status) {
+    return CupertinoButton(
+      onPressed: () {
+        setState(() {
+          statusController.text = status;
+        });
+      },
+      padding: const EdgeInsets.all(0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 5,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: CustomColors.black,
+          border: Border.all(
+            color: CustomColors.grey,
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              CupertinoIcons.circle_fill,
+              color: CustomColors.primaryColor,
+              size: 10,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              ' $status',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: MediaQuery.of(context).size.width * 0.04,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding statusField(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: CupertinoTextField(
+        controller: statusController,
+        onTap: () {
+          setState(() {
+            isStatusTapped = true;
+            isNameTapped = false;
+          });
+        },
+        onTapOutside: (_) {
+          FocusScope.of(context).unfocus();
+          setState(() {
+            isStatusTapped = false;
+            isNameTapped = false;
+          });
+        },
+        cursorColor: CustomColors.primaryColor,
+        padding: const EdgeInsets.all(15.0),
+        placeholder: 'About',
+        placeholderStyle: GoogleFonts.poppins(
+          color: Colors.white.withOpacity(0.5),
+          fontWeight: FontWeight.w400,
+          fontSize: MediaQuery.of(context).size.width * 0.04,
+        ),
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: MediaQuery.of(context).size.width * 0.04,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: CustomColors.black,
+          border: Border.all(
+            color:
+                isStatusTapped ? CustomColors.primaryColor : CustomColors.grey,
+            width: 1,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding nameField(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: CupertinoTextField(
+        controller: nameController,
+        onTap: () {
+          setState(() {
+            isNameTapped = true;
+            isStatusTapped = false;
+          });
+        },
+        onTapOutside: (_) {
+          FocusScope.of(context).unfocus();
+          setState(() {
+            isNameTapped = false;
+            isStatusTapped = false;
+          });
+        },
+        cursorColor: CustomColors.primaryColor,
+        padding: const EdgeInsets.all(15.0),
+        placeholder: 'Name',
+        placeholderStyle: GoogleFonts.poppins(
+          color: Colors.white.withOpacity(0.5),
+          fontWeight: FontWeight.w400,
+          fontSize: MediaQuery.of(context).size.width * 0.04,
+        ),
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: MediaQuery.of(context).size.width * 0.04,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: CustomColors.black,
+          border: Border.all(
+            color: isNameTapped ? CustomColors.primaryColor : CustomColors.grey,
+            width: 1,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Material photo() {
+    return Material(
+      color: Colors.transparent,
+      child: profilePhoto,
+    );
+  }
+
+  CupertinoNavigationBar navBar() {
+    return CupertinoNavigationBar(
+      backgroundColor: CustomColors.black,
+      border: Border.all(
+        color: CustomColors.black,
+        width: 0,
+      ),
+      middle: Text(
+        'Create Profile',
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

@@ -51,245 +51,21 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         children: [
           CupertinoPageScaffold(
             backgroundColor: CustomColors.black,
-            navigationBar: CupertinoNavigationBar(
-              previousPageTitle: 'Settings',
-              backgroundColor: CustomColors.black,
-              border: Border(
-                bottom: BorderSide(
-                  color: CustomColors.grey,
-                  width: 0.0,
-                ),
-              ),
-              middle: Text(
-                'Edit Profile',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              trailing: GestureDetector(
-                onTap: () {
-                  if (nameController.text.isEmpty) {
-                    DialogHelper().cupertinoDialog(
-                      title: 'Error',
-                      subtitle: 'Name cannot be empty',
-                    );
-                    return;
-                  }
-                  if (statusController.text.isEmpty) {
-                    DialogHelper().cupertinoDialog(
-                      title: 'Error',
-                      subtitle: 'Status cannot be empty',
-                    );
-                    return;
-                  }
-                  save();
-                },
-                child: Text(
-                  'Save',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: showAppBarActions
-                        ? Colors.blue
-                        : Colors.grey.withOpacity(0.5),
-                  ),
-                ),
-              ),
-            ),
+            navigationBar: navBar(),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SpaceHelper.boslukHeight(context, 0.015),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.02,
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: CustomColors.grey.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Column(
-                        children: [
-                          SpaceHelper.boslukHeight(context, 0.015),
-                          Row(
-                            children: [
-                              SpaceHelper.boslukWidth(context, 0.02),
-                              profilePhoto,
-                              SpaceHelper.boslukWidth(context, 0.02),
-                              Expanded(
-                                child: Text(
-                                  'Enter your name and add an optional profile picture.',
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.035,
-                                    color: Colors.white38,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SpaceHelper.boslukHeight(context, 0.03),
-                          Divider(
-                            color: CustomColors.grey,
-                            height: 0.0,
-                            thickness: 0.5,
-                          ),
-                          // SpaceHelper.boslukHeight(context, 0.015),
-                          // customTextField
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.02,
-                            ),
-                            child: CupertinoTextField(
-                              controller: nameController,
-                              onTapOutside: (_) {
-                                FocusScope.of(context).unfocus();
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  showAppBarActions = true;
-                                });
-                              },
-                              padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    MediaQuery.of(context).size.width * 0.02,
-                                vertical:
-                                    MediaQuery.of(context).size.width * 0.03,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              placeholder: 'Name',
-                              placeholderStyle: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w400,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.04,
-                                color: Colors.white38,
-                              ),
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w400,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.04,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SpaceHelper.boslukHeight(context, 0.02),
-                  Row(
-                    children: [
-                      SpaceHelper.boslukWidth(context, 0.06),
-                      Text(
-                        'ABOUT',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                          color: Colors.white38,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SpaceHelper.boslukHeight(context, 0.002),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.02,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: CustomColors.grey.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: CupertinoTextField(
-                        maxLines: 3,
-                        controller: statusController,
-                        onTapOutside: (_) {
-                          FocusScope.of(context).unfocus();
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            showAppBarActions = true;
-                          });
-                        },
-                        padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.04,
-                          vertical: MediaQuery.of(context).size.width * 0.03,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        placeholder: 'Status',
-                        placeholderStyle: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          color: Colors.white38,
-                        ),
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SpaceHelper.boslukHeight(context, 0.02),
-                  Row(
-                    children: [
-                      SpaceHelper.boslukWidth(context, 0.06),
-                      Text(
-                        'PHONE NUMBER',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                          color: Colors.white38,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SpaceHelper.boslukHeight(context, 0.002),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.02,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: CustomColors.grey.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: CupertinoTextField(
-                        controller: phoneNumberController,
-                        readOnly: true,
-                        onTapOutside: (_) {
-                          FocusScope.of(context).unfocus();
-                        },
-                        padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.04,
-                          vertical: MediaQuery.of(context).size.width * 0.03,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        placeholder: 'Phone Number',
-                        placeholderStyle: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          color: Colors.white38,
-                        ),
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SpaceHelper.boslukHeight(context, 0.2),
+                  SpaceHelper.height(context, 0.015),
+                  imgAndTextSection(context),
+                  SpaceHelper.height(context, 0.02),
+                  aboutTxt(context),
+                  SpaceHelper.height(context, 0.002),
+                  statusField(context),
+                  SpaceHelper.height(context, 0.02),
+                  phoneNumberTxt(context),
+                  SpaceHelper.height(context, 0.002),
+                  phoneNumberField(context),
+                  SpaceHelper.height(context, 0.2),
                 ],
               ),
             ),
@@ -302,6 +78,250 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Padding phoneNumberField(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.02,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomColors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: CupertinoTextField(
+          controller: phoneNumberController,
+          readOnly: true,
+          onTapOutside: (_) {
+            FocusScope.of(context).unfocus();
+          },
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.04,
+            vertical: MediaQuery.of(context).size.width * 0.03,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          placeholder: 'Phone Number',
+          placeholderStyle: GoogleFonts.poppins(
+            fontWeight: FontWeight.w400,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
+            color: Colors.white38,
+          ),
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w400,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row phoneNumberTxt(BuildContext context) {
+    return Row(
+      children: [
+        SpaceHelper.width(context, 0.06),
+        Text(
+          'PHONE NUMBER',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w500,
+            fontSize: MediaQuery.of(context).size.width * 0.035,
+            color: Colors.white38,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding statusField(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.02,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomColors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: CupertinoTextField(
+          maxLines: 3,
+          controller: statusController,
+          onTapOutside: (_) {
+            FocusScope.of(context).unfocus();
+          },
+          onChanged: (value) {
+            setState(() {
+              showAppBarActions = true;
+            });
+          },
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.04,
+            vertical: MediaQuery.of(context).size.width * 0.03,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          placeholder: 'Status',
+          placeholderStyle: GoogleFonts.poppins(
+            fontWeight: FontWeight.w400,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
+            color: Colors.white38,
+          ),
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w400,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row aboutTxt(BuildContext context) {
+    return Row(
+      children: [
+        SpaceHelper.width(context, 0.06),
+        Text(
+          'ABOUT',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w500,
+            fontSize: MediaQuery.of(context).size.width * 0.035,
+            color: Colors.white38,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding imgAndTextSection(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.02,
+      ),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: CustomColors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: Column(
+          children: [
+            SpaceHelper.height(context, 0.015),
+            Row(
+              children: [
+                SpaceHelper.width(context, 0.02),
+                profilePhoto,
+                SpaceHelper.width(context, 0.02),
+                Expanded(
+                  child: Text(
+                    'Enter your name and add an optional profile picture.',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: MediaQuery.of(context).size.width * 0.035,
+                      color: Colors.white38,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SpaceHelper.height(context, 0.03),
+            Divider(
+              color: CustomColors.grey,
+              height: 0.0,
+              thickness: 0.5,
+            ),
+            // SpaceHelper.boslukHeight(context, 0.015),
+            // customTextField
+            nameField(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding nameField(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.02,
+      ),
+      child: CupertinoTextField(
+        controller: nameController,
+        onTapOutside: (_) {
+          FocusScope.of(context).unfocus();
+        },
+        onChanged: (value) {
+          setState(() {
+            showAppBarActions = true;
+          });
+        },
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.02,
+          vertical: MediaQuery.of(context).size.width * 0.03,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        placeholder: 'Name',
+        placeholderStyle: GoogleFonts.poppins(
+          fontWeight: FontWeight.w400,
+          fontSize: MediaQuery.of(context).size.width * 0.04,
+          color: Colors.white38,
+        ),
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w400,
+          fontSize: MediaQuery.of(context).size.width * 0.04,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  CupertinoNavigationBar navBar() {
+    return CupertinoNavigationBar(
+      previousPageTitle: 'Settings',
+      backgroundColor: CustomColors.black,
+      border: Border(
+        bottom: BorderSide(
+          color: CustomColors.grey,
+          width: 0.0,
+        ),
+      ),
+      middle: Text(
+        'Edit Profile',
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: GestureDetector(
+        onTap: () {
+          if (nameController.text.isEmpty) {
+            DialogHelper().cupertinoDialog(
+              title: 'Error',
+              subtitle: 'Name cannot be empty',
+            );
+            return;
+          }
+          if (statusController.text.isEmpty) {
+            DialogHelper().cupertinoDialog(
+              title: 'Error',
+              subtitle: 'Status cannot be empty',
+            );
+            return;
+          }
+          save();
+        },
+        child: Text(
+          'Save',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w500,
+            color:
+                showAppBarActions ? Colors.blue : Colors.grey.withOpacity(0.5),
+          ),
+        ),
       ),
     );
   }

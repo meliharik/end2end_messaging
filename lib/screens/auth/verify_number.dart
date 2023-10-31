@@ -50,20 +50,7 @@ class _VerifyNumberPageState extends ConsumerState<VerifyNumberPage> {
       child: Stack(
         children: [
           CupertinoPageScaffold(
-            navigationBar: CupertinoNavigationBar(
-              backgroundColor: CustomColors.black,
-              border: Border.all(
-                color: CustomColors.black,
-                width: 0,
-              ),
-              middle: Text(
-                'Securely',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            navigationBar: navBar(),
             backgroundColor: CustomColors.black,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(25.0),
@@ -89,81 +76,7 @@ class _VerifyNumberPageState extends ConsumerState<VerifyNumberPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Directionality(
-                    // Specify direction if desired
-                    textDirection: TextDirection.ltr,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Pinput(
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        autofocus: true,
-                        closeKeyboardWhenCompleted: true,
-                        preFilledWidget: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: 56,
-                              height: 3,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ],
-                        ),
-                        onCompleted: (value) {
-                          debugPrint('onCompleted: $value');
-                          debugPrint(
-                              "widget.verificationId: ${widget.verificationId}");
-
-                          setState(() {
-                            isLoading = true;
-                          });
-                          sendCodeToFirebase(code: controller.text);
-                          // }
-                        },
-                        defaultPinTheme: PinTheme(
-                          width: 60,
-                          height: 60,
-                          textStyle: GoogleFonts.poppins(
-                            fontSize: 22,
-                            color: Colors.white,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(19),
-                            border: Border.all(
-                              color: CustomColors.black,
-                            ),
-                          ),
-                        ),
-                        controller: controller,
-                        androidSmsAutofillMethod:
-                            AndroidSmsAutofillMethod.smsRetrieverApi,
-                        pinAnimationType: PinAnimationType.slide,
-                        listenForMultipleSmsOnAndroid: true,
-                        length: 6,
-                        isCursorAnimationEnabled: true,
-                        showCursor: true,
-                        senderPhoneNumber:
-                            widget.phoneNumber.replaceAll(' ', ''),
-                        cursor: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: 56,
-                              height: 3,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  pinField()
                 ],
               ),
             ),
@@ -176,6 +89,104 @@ class _VerifyNumberPageState extends ConsumerState<VerifyNumberPage> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Directionality pinField() {
+    return Directionality(
+      // Specify direction if desired
+      textDirection: TextDirection.ltr,
+      child: Material(
+        color: Colors.transparent,
+        child: Theme(
+          // make it dark
+          data: ThemeData.dark(),
+          child: Pinput(
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            // keyboard theme
+
+            autofocus: true,
+            closeKeyboardWhenCompleted: true,
+            preFilledWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 56,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ],
+            ),
+            onCompleted: (value) {
+              debugPrint('onCompleted: $value');
+              debugPrint("widget.verificationId: ${widget.verificationId}");
+
+              setState(() {
+                isLoading = true;
+              });
+              sendCodeToFirebase(code: controller.text);
+              // }
+            },
+            defaultPinTheme: PinTheme(
+              width: 60,
+              height: 60,
+              textStyle: GoogleFonts.poppins(
+                fontSize: 22,
+                color: Colors.white,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(19),
+                border: Border.all(
+                  color: CustomColors.black,
+                ),
+              ),
+            ),
+            controller: controller,
+            androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
+            pinAnimationType: PinAnimationType.slide,
+            listenForMultipleSmsOnAndroid: true,
+            length: 6,
+            isCursorAnimationEnabled: true,
+            showCursor: true,
+            senderPhoneNumber: widget.phoneNumber.replaceAll(' ', ''),
+            cursor: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 56,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  CupertinoNavigationBar navBar() {
+    return CupertinoNavigationBar(
+      backgroundColor: CustomColors.black,
+      border: Border.all(
+        color: CustomColors.black,
+        width: 0,
+      ),
+      middle: Text(
+        'Securely',
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

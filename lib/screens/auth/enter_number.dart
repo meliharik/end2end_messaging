@@ -30,21 +30,7 @@ class _EnterNumberPageState extends ConsumerState<EnterNumberPage> {
       child: Stack(
         children: [
           CupertinoPageScaffold(
-            navigationBar: CupertinoNavigationBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: CustomColors.black,
-              border: Border.all(
-                color: CustomColors.black,
-                width: 0,
-              ),
-              middle: Text(
-                'Securely',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            navigationBar: navBar(),
             backgroundColor: CustomColors.black,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(25.0),
@@ -71,97 +57,9 @@ class _EnterNumberPageState extends ConsumerState<EnterNumberPage> {
                   ),
                   const SizedBox(height: 20),
                   // add +90 to the beginning of the number
-                  CupertinoTextField(
-                    onTap: () {
-                      setState(() {
-                        isTextFieldTapped = true;
-                      });
-                    },
-                    onTapOutside: (_) {
-                      setState(() {
-                        isTextFieldTapped = false;
-                      });
-                      FocusScope.of(context).unfocus();
-                    },
-                    cursorColor: CustomColors.primaryColor,
-                    controller: controller,
-                    padding: const EdgeInsets.all(15.0),
-                    placeholder: 'Phone number',
-                    placeholderStyle: GoogleFonts.poppins(
-                      color: Colors.white.withOpacity(0.5),
-                      fontWeight: FontWeight.w400,
-                      fontSize: MediaQuery.of(context).size.width * 0.038,
-                    ),
-                    prefix: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text(
-                        '+90',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                        ),
-                      ),
-                    ),
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                    ),
-                    inputFormatters: [
-                      PhoneInputFormatter(
-                        defaultCountryCode: 'TR',
-                      ),
-                    ],
-                    decoration: BoxDecoration(
-                      color: CustomColors.black,
-                      border: Border.all(
-                        color: isTextFieldTapped
-                            ? CustomColors.primaryColor
-                            : CustomColors.grey,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    prefixMode: OverlayVisibilityMode.always,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                  ),
+                  numberField(context),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CupertinoButton(
-                          onPressed: () {
-                            if (controller.text.isEmpty) {
-                              DialogHelper().cupertinoDialog(
-                                title: 'Error',
-                                subtitle: 'Please enter your phone number.',
-                              );
-                              return;
-                            }
-                            if (controller.text.length != 12) {
-                              DialogHelper().cupertinoDialog(
-                                title: 'Error',
-                                subtitle: 'Please enter a valid phone number.',
-                              );
-                              return;
-                            }
-                            verifyPhoneNumber();
-                          },
-                          color: CustomColors.primaryColor,
-                          child: Text(
-                            'Next',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  nextBtn(),
                 ],
               ),
             ),
@@ -174,6 +72,119 @@ class _EnterNumberPageState extends ConsumerState<EnterNumberPage> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Row nextBtn() {
+    return Row(
+      children: [
+        Expanded(
+          child: CupertinoButton(
+            onPressed: () {
+              if (controller.text.isEmpty) {
+                DialogHelper().cupertinoDialog(
+                  title: 'Error',
+                  subtitle: 'Please enter your phone number.',
+                );
+                return;
+              }
+              if (controller.text.length != 12) {
+                DialogHelper().cupertinoDialog(
+                  title: 'Error',
+                  subtitle: 'Please enter a valid phone number.',
+                );
+                return;
+              }
+              verifyPhoneNumber();
+            },
+            color: CustomColors.primaryColor,
+            child: Text(
+              'Next',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  CupertinoTextField numberField(BuildContext context) {
+    return CupertinoTextField(
+      onTap: () {
+        setState(() {
+          isTextFieldTapped = true;
+        });
+      },
+      onTapOutside: (_) {
+        setState(() {
+          isTextFieldTapped = false;
+        });
+        FocusScope.of(context).unfocus();
+      },
+      cursorColor: CustomColors.primaryColor,
+      controller: controller,
+      padding: const EdgeInsets.all(15.0),
+      placeholder: 'Phone number',
+      placeholderStyle: GoogleFonts.poppins(
+        color: Colors.white.withOpacity(0.5),
+        fontWeight: FontWeight.w400,
+        fontSize: MediaQuery.of(context).size.width * 0.038,
+      ),
+      prefix: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        child: Text(
+          '+90',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontWeight: FontWeight.w400,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
+          ),
+        ),
+      ),
+      style: GoogleFonts.poppins(
+        color: Colors.white,
+        fontWeight: FontWeight.w400,
+        fontSize: MediaQuery.of(context).size.width * 0.04,
+      ),
+      inputFormatters: [
+        PhoneInputFormatter(
+          defaultCountryCode: 'TR',
+        ),
+      ],
+      decoration: BoxDecoration(
+        color: CustomColors.black,
+        border: Border.all(
+          color:
+              isTextFieldTapped ? CustomColors.primaryColor : CustomColors.grey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      prefixMode: OverlayVisibilityMode.always,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.done,
+    );
+  }
+
+  CupertinoNavigationBar navBar() {
+    return CupertinoNavigationBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: CustomColors.black,
+      border: Border.all(
+        color: CustomColors.black,
+        width: 0,
+      ),
+      middle: Text(
+        'Securely',
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

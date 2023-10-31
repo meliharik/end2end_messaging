@@ -30,22 +30,15 @@ class _YonlendirmeState extends ConsumerState<Yonlendirme> {
   }
 
   getNavigation() {
-    // current firebase user
-
-    // if (connectedToInternet == false) {
-    // return const NoInternetPage();
-    // } else {
     User? user = FirebaseAuth.instance.currentUser;
-    // FirebaseAuth.instance.signOut();
-    // storage.deleteAll();
+
     if (user == null) {
       storage.deleteAll();
+
       return const EnterNumberPage();
     } else {
-      // return const HomeTestPage();
       return const HomePage();
     }
-    // }
   }
 
   Future networkControl() async {

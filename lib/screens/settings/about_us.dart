@@ -17,29 +17,14 @@ class _AboutUsPageState extends ConsumerState<AboutUsPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CustomColors.black,
-      navigationBar: CupertinoNavigationBar(
-        previousPageTitle: 'Settings',
-        backgroundColor: CustomColors.black,
-        border: Border(
-          bottom: BorderSide(
-            color: CustomColors.grey,
-            width: 0.0,
-          ),
-        ),
-        middle: Text(
-          'About Us',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      navigationBar: navBar(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
           ),
-          SpaceHelper.boslukHeight(context, 0.05),
+          SpaceHelper.height(context, 0.05),
           Text(
             'We are Securely.',
             style: GoogleFonts.poppins(
@@ -54,7 +39,7 @@ class _AboutUsPageState extends ConsumerState<AboutUsPage> {
               fontSize: MediaQuery.of(context).size.width * 0.06,
             ),
           ),
-          SpaceHelper.boslukHeight(context, 0.05),
+          SpaceHelper.height(context, 0.05),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.03,
@@ -67,10 +52,10 @@ class _AboutUsPageState extends ConsumerState<AboutUsPage> {
               ),
             ),
           ),
-          SpaceHelper.boslukHeight(context, 0.03),
+          SpaceHelper.height(context, 0.03),
           Row(
             children: [
-              SpaceHelper.boslukWidth(context, 0.03),
+              SpaceHelper.width(context, 0.03),
               Text(
                 'Developers',
                 style: GoogleFonts.poppins(
@@ -80,72 +65,65 @@ class _AboutUsPageState extends ConsumerState<AboutUsPage> {
               ),
             ],
           ),
-          SpaceHelper.boslukHeight(context, 0.02),
-          Row(
-            children: [
-              SpaceHelper.boslukWidth(context, 0.03),
-              Expanded(
-                child: Material(
-                  color: Colors.transparent,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset(
-                        'assets/images/melih.JPG',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    title: Text(
-                      'Melih Arık',
-                      style: GoogleFonts.poppins(
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SpaceHelper.boslukWidth(context, 0.03),
-            ],
-          ),
-          SpaceHelper.boslukHeight(context, 0.02),
-          Row(
-            children: [
-              SpaceHelper.boslukWidth(context, 0.03),
-              Expanded(
-                child: Material(
-                  color: Colors.transparent,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset(
-                        'assets/images/kursat.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    title: Text(
-                      'Kürşat Memiş',
-                      style: GoogleFonts.poppins(
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SpaceHelper.boslukWidth(context, 0.03),
-            ],
-          ),
+          SpaceHelper.height(context, 0.02),
+          person(context, 'Melih Arık', 'assets/images/melih.JPG'),
+          SpaceHelper.height(context, 0.02),
+          person(context, 'Kürşat Memiş', 'assets/images/kursat.jpg'),
         ],
       ),
+    );
+  }
+
+  CupertinoNavigationBar navBar() {
+    return CupertinoNavigationBar(
+      previousPageTitle: 'Settings',
+      backgroundColor: CustomColors.black,
+      border: Border(
+        bottom: BorderSide(
+          color: CustomColors.grey,
+          width: 0.0,
+        ),
+      ),
+      middle: Text(
+        'About Us',
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  Row person(BuildContext context, String name, String image) {
+    return Row(
+      children: [
+        SpaceHelper.width(context, 0.03),
+        Expanded(
+          child: Material(
+            color: Colors.transparent,
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.03,
+              ),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(
+                name,
+                style: GoogleFonts.poppins(
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SpaceHelper.width(context, 0.03),
+      ],
     );
   }
 }
