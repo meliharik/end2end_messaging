@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names, use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:end2end_messaging/helpers/dialog.dart';
 import 'package:end2end_messaging/home.dart';
@@ -84,8 +86,12 @@ class _VerifyNumberPageState extends ConsumerState<VerifyNumberPage> {
           if (isLoading)
             Container(
               color: Colors.black.withOpacity(0.5),
-              child: const Center(
-                child: CupertinoActivityIndicator(),
+              child: Center(
+                child: Platform.isIOS
+                    ? const CupertinoActivityIndicator()
+                    : CircularProgressIndicator(
+                        color: CustomColors.primaryColor,
+                      ),
               ),
             ),
         ],

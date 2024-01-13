@@ -12,6 +12,7 @@ import 'package:end2end_messaging/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,25 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
   final storage = const FlutterSecureStorage();
 
   @override
+  void initState() {
+    super.initState();
+    FlutterAppBadger.removeBadge();
+
+    updateStatus();
+  }
+
+  updateStatus() async {
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.phoneNumber.toString())
+        .update({
+      'status': 'Online',
+      'lastSeen': DateTime.now().toUtc(),
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: callAsyncFetch(),
@@ -43,6 +63,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
             child: CustomScrollView(
               slivers: [
                 CupertinoSliverNavigationBar(
+                  automaticallyImplyLeading: false,
                   // bottom border grey
                   border: Border(
                     bottom: BorderSide(
@@ -390,6 +411,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
     const storage = FlutterSecureStorage();
     var number = await storage.read(key: "number");
     var x = await storage.read(key: "pri_key");
+    debugPrint("pri_key: $x");
     if (x == "empty") {
       DialogHelper().cupertinoDialog(
         title: 'Error',

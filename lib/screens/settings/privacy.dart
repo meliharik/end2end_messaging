@@ -5,6 +5,7 @@ import 'package:end2end_messaging/models/user.dart';
 import 'package:end2end_messaging/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,15 +68,28 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
                       ),
                     ),
                     actions: [
+                      // copy to clipboard button
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          Clipboard.setData(
+                            ClipboardData(text: privateKey),
+                          );
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Copy',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+
                       CupertinoDialogAction(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text(
+                        child: const Text(
                           'Close',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                          ),
                         ),
                       ),
                     ],
@@ -134,6 +148,21 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
                       ),
                     ),
                     actions: [
+                      // copy to clipboard button
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          Clipboard.setData(
+                            ClipboardData(text: widget.user.publicKey),
+                          );
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Copy',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                       CupertinoDialogAction(
                         onPressed: () {
                           Navigator.pop(context);

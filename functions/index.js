@@ -71,11 +71,22 @@ exports.sendMessageNotification = functions.firestore
                           notification: {
                             title: `${userFrom.data().displayName}`,
                             body: contentMessage,
-                            // image: userFrom.data().fotoUrl,
+                            image: "https://i.ibb.co/7JQGK0K/Logo.png",
+                            icon: "https://i.ibb.co/7JQGK0K/Logo.png",
                             badge: "1",
                             sound: "default",
                           },
+                          data: {
+                            click_action: "FLUTTER_NOTIFICATION_CLICK",
+                            id: "1",
+                            status: "done",
+                            gonderenId: userFrom.data().id,
+                            aliciId: userTo.data().id,
+                            username: userFrom.data().displayName,
+                            image: "https://i.ibb.co/7JQGK0K/Logo.png",
+                          },
                         };
+                        console.log("Payload: ", payload);
                         // Let push to the target device
                         admin
                             .messaging()

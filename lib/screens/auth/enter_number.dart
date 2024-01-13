@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:end2end_messaging/helpers/dialog.dart';
 import 'package:end2end_messaging/screens/auth/verify_number.dart';
 import 'package:end2end_messaging/utils/colors.dart';
@@ -67,8 +69,12 @@ class _EnterNumberPageState extends ConsumerState<EnterNumberPage> {
           if (isLoading)
             Container(
               color: Colors.black.withOpacity(0.5),
-              child: const Center(
-                child: CupertinoActivityIndicator(),
+              child: Center(
+                child: Platform.isIOS
+                    ? const CupertinoActivityIndicator()
+                    : CircularProgressIndicator(
+                        color: CustomColors.primaryColor,
+                      ),
               ),
             ),
         ],

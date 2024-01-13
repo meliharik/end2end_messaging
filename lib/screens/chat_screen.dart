@@ -32,8 +32,8 @@ import 'package:timeago/timeago.dart' as timeago;
 final isLoadingProvider = StateProvider<bool>((ref) => false);
 
 class ChatScreen extends ConsumerStatefulWidget {
-  final FirestoreUser senderUser;
-  final FirestoreUser receiverUser;
+  final FirestoreUser? senderUser;
+  final FirestoreUser? receiverUser;
   const ChatScreen({
     super.key,
     required this.senderUser,
@@ -78,20 +78,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     // if new message comes, it will be set as read
     FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .collection('messageTo')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .collection('messages')
         .where('isRead', isEqualTo: false)
         .get()
         .then((value) {
       for (var message in value.docs) {
-        if (message['senderId'] == widget.receiverUser.phoneNumber) {
+        if (message['senderId'] == widget.receiverUser!.phoneNumber) {
           FirebaseFirestore.instance
               .collection('chats')
-              .doc(widget.senderUser.phoneNumber)
+              .doc(widget.senderUser!.phoneNumber)
               .collection('messageTo')
-              .doc(widget.receiverUser.phoneNumber)
+              .doc(widget.receiverUser!.phoneNumber)
               .collection('messages')
               .doc(message.id)
               .update({
@@ -116,9 +116,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('chats')
-                      .doc(widget.senderUser.phoneNumber)
+                      .doc(widget.senderUser!.phoneNumber)
                       .collection('messageTo')
-                      .doc(widget.receiverUser.phoneNumber)
+                      .doc(widget.receiverUser!.phoneNumber)
                       .collection('messages')
                       .orderBy('createdAt', descending: true)
                       .snapshots(),
@@ -159,7 +159,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           dateList.add(newDate);
                         }
 
-                        // remoce duplicate dates
+                        // removee duplicate dates
                         dateList = dateList.toSet().toList();
                         debugPrint(dateList.toString());
 
@@ -242,7 +242,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                             color: messagesAtThisDay[index]
                                                         .senderId ==
                                                     widget
-                                                        .senderUser.phoneNumber
+                                                        .senderUser!.phoneNumber
                                                 ? CustomColors.primaryColor
                                                 : CustomColors.grey
                                                     .withOpacity(0.5),
@@ -253,7 +253,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                               ? Text(
                                                   messagesAtThisDay[index]
                                                               .senderId ==
-                                                          widget.senderUser
+                                                          widget.senderUser!
                                                               .phoneNumber
                                                       ? messagesAtThisDay[index]
                                                           .messageForSender
@@ -447,15 +447,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         // sender
         await FirebaseFirestore.instance
             .collection('chats')
-            .doc(widget.senderUser.phoneNumber)
+            .doc(widget.senderUser!.phoneNumber)
             .set({
           'createdAt': DateTime.now(),
         }).then((value) {
           FirebaseFirestore.instance
               .collection('chats')
-              .doc(widget.senderUser.phoneNumber)
+              .doc(widget.senderUser!.phoneNumber)
               .collection('messageTo')
-              .doc(widget.receiverUser.phoneNumber)
+              .doc(widget.receiverUser!.phoneNumber)
               .set({
             'createdAt': DateTime.now(),
             'lastMessage': messageController.text,
@@ -465,15 +465,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         // receiver
         await FirebaseFirestore.instance
             .collection('chats')
-            .doc(widget.receiverUser.phoneNumber)
+            .doc(widget.receiverUser!.phoneNumber)
             .set({
           'createdAt': DateTime.now(),
         }).then((value) {
           FirebaseFirestore.instance
               .collection('chats')
-              .doc(widget.receiverUser.phoneNumber)
+              .doc(widget.receiverUser!.phoneNumber)
               .collection('messageTo')
-              .doc(widget.senderUser.phoneNumber)
+              .doc(widget.senderUser!.phoneNumber)
               .set({
             'createdAt': DateTime.now(),
             'lastMessage': messageController.text,
@@ -483,9 +483,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         //sender
         FirebaseFirestore.instance
             .collection('chats')
-            .doc(widget.senderUser.phoneNumber)
+            .doc(widget.senderUser!.phoneNumber)
             .collection('messageTo')
-            .doc(widget.receiverUser.phoneNumber)
+            .doc(widget.receiverUser!.phoneNumber)
             .collection('messages')
             .add(
           {
@@ -496,20 +496,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             'isRead': true,
             'isImage': false,
             'sendNotification': false,
-            'senderId': widget.senderUser.phoneNumber,
-            'receiverId': widget.receiverUser.phoneNumber,
+            'senderId': widget.senderUser!.phoneNumber,
+            'receiverId': widget.receiverUser!.phoneNumber,
           },
         );
 
         FirestoreUser user =
-            await FirestoreService().getUserData(widget.receiverUser.id);
+            await FirestoreService().getUserData(widget.receiverUser!.id);
 
         // receviver
         FirebaseFirestore.instance
             .collection('chats')
-            .doc(widget.receiverUser.phoneNumber)
+            .doc(widget.receiverUser!.phoneNumber)
             .collection('messageTo')
-            .doc(widget.senderUser.phoneNumber)
+            .doc(widget.senderUser!.phoneNumber)
             .collection('messages')
             .add(
           {
@@ -520,8 +520,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             'isRead': false,
             'isImage': false,
             'sendNotification': user.status == 'Online' ? false : true,
-            'senderId': widget.senderUser.phoneNumber,
-            'receiverId': widget.receiverUser.phoneNumber,
+            'senderId': widget.senderUser!.phoneNumber,
+            'receiverId': widget.receiverUser!.phoneNumber,
           },
         );
 
@@ -798,7 +798,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           padding: EdgeInsets.zero,
                           onPressed: () async {
                             var response = await Dio().get(
-                                widget.receiverUser.photoURL,
+                                widget.receiverUser!.photoURL,
                                 options:
                                     Options(responseType: ResponseType.bytes));
                             final result = await ImageGallerySaver.saveImage(
@@ -830,13 +830,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     backgroundColor: Colors.black,
                     body: Center(
                       child: Hero(
-                        tag: widget.receiverUser.photoURL,
+                        tag: widget.receiverUser!.photoURL,
                         child: // interactice image
                             InteractiveViewer(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              widget.receiverUser.photoURL,
+                              widget.receiverUser!.photoURL,
                               height: MediaQuery.of(context).size.height,
                               width: MediaQuery.of(context).size.width,
                               fit: BoxFit.fitWidth,
@@ -852,7 +852,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                widget.receiverUser.photoURL,
+                widget.receiverUser!.photoURL,
                 height: 30,
                 width: 30,
                 fit: BoxFit.cover,
@@ -865,7 +865,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.receiverUser.displayName,
+                  widget.receiverUser!.displayName,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.poppins(
                     color: Colors.white,
@@ -875,7 +875,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('users')
-                        .doc(widget.receiverUser.phoneNumber)
+                        .doc(widget.receiverUser!.phoneNumber)
                         .snapshots(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) {
@@ -934,7 +934,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => ChatDetailsPage(user: widget.receiverUser),
+              builder: (context) => ChatDetailsPage(user: widget.receiverUser!),
             ),
           );
         },
@@ -950,20 +950,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   markAsReadMessage() async {
     FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .collection('messageTo')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .collection('messages')
         .where('isRead', isEqualTo: false)
         .get()
         .then((value) {
       for (var message in value.docs) {
-        if (message['senderId'] == widget.receiverUser.phoneNumber) {
+        if (message['senderId'] == widget.receiverUser!.phoneNumber) {
           FirebaseFirestore.instance
               .collection('chats')
-              .doc(widget.senderUser.phoneNumber)
+              .doc(widget.senderUser!.phoneNumber)
               .collection('messageTo')
-              .doc(widget.receiverUser.phoneNumber)
+              .doc(widget.receiverUser!.phoneNumber)
               .collection('messages')
               .doc(message.id)
               .update({
@@ -1015,7 +1015,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Future<String> encryptMsg(String message) async {
     String publicKey = '';
 
-    publicKey = widget.receiverUser.publicKey;
+    publicKey = widget.receiverUser!.publicKey;
 
     var enMsg = await RSA.encryptPKCS1v15(message, publicKey);
     // debugPrint("enMsg: $enMsg");
@@ -1026,7 +1026,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Future<String> encryptMsgForSender(String message) async {
     String publicKey = '';
 
-    publicKey = widget.senderUser.publicKey;
+    publicKey = widget.senderUser!.publicKey;
 
     var enMsg = await RSA.encryptPKCS1v15(message, publicKey);
     // debugPrint("enMsg: $enMsg");
@@ -1112,15 +1112,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
     await FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .set({
       'createdAt': DateTime.now(),
     }).then((value) {
       FirebaseFirestore.instance
           .collection('chats')
-          .doc(widget.senderUser.phoneNumber)
+          .doc(widget.senderUser!.phoneNumber)
           .collection('messageTo')
-          .doc(widget.receiverUser.phoneNumber)
+          .doc(widget.receiverUser!.phoneNumber)
           .set({
         'createdAt': DateTime.now(),
         'lastMessage': base64,
@@ -1130,15 +1130,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     // receiver
     await FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .set({
       'createdAt': DateTime.now(),
     }).then((value) {
       FirebaseFirestore.instance
           .collection('chats')
-          .doc(widget.receiverUser.phoneNumber)
+          .doc(widget.receiverUser!.phoneNumber)
           .collection('messageTo')
-          .doc(widget.senderUser.phoneNumber)
+          .doc(widget.senderUser!.phoneNumber)
           .set({
         'createdAt': DateTime.now(),
         'lastMessage': base64,
@@ -1148,9 +1148,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     //sender
     FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .collection('messageTo')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .collection('messages')
         .add(
       {
@@ -1160,20 +1160,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         'isRead': true,
         'isImage': true,
         'sendNotification': false,
-        'senderId': widget.senderUser.phoneNumber,
-        'receiverId': widget.receiverUser.phoneNumber,
+        'senderId': widget.senderUser!.phoneNumber,
+        'receiverId': widget.receiverUser!.phoneNumber,
       },
     );
 
     FirestoreUser user =
-        await FirestoreService().getUserData(widget.receiverUser.id);
+        await FirestoreService().getUserData(widget.receiverUser!.id);
 
     // receviver
     FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .collection('messageTo')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .collection('messages')
         .add(
       {
@@ -1183,8 +1183,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         'isRead': false,
         'isImage': true,
         'sendNotification': user.status == 'Online' ? false : true,
-        'senderId': widget.senderUser.phoneNumber,
-        'receiverId': widget.receiverUser.phoneNumber,
+        'senderId': widget.senderUser!.phoneNumber,
+        'receiverId': widget.receiverUser!.phoneNumber,
       },
     );
 
@@ -1276,15 +1276,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
     await FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .set({
       'createdAt': DateTime.now(),
     }).then((value) {
       FirebaseFirestore.instance
           .collection('chats')
-          .doc(widget.senderUser.phoneNumber)
+          .doc(widget.senderUser!.phoneNumber)
           .collection('messageTo')
-          .doc(widget.receiverUser.phoneNumber)
+          .doc(widget.receiverUser!.phoneNumber)
           .set({
         'createdAt': DateTime.now(),
         'lastMessage': base64,
@@ -1294,15 +1294,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     // receiver
     await FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .set({
       'createdAt': DateTime.now(),
     }).then((value) {
       FirebaseFirestore.instance
           .collection('chats')
-          .doc(widget.receiverUser.phoneNumber)
+          .doc(widget.receiverUser!.phoneNumber)
           .collection('messageTo')
-          .doc(widget.senderUser.phoneNumber)
+          .doc(widget.senderUser!.phoneNumber)
           .set({
         'createdAt': DateTime.now(),
         'lastMessage': base64,
@@ -1312,9 +1312,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     //sender
     FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .collection('messageTo')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .collection('messages')
         .add(
       {
@@ -1324,20 +1324,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         'isRead': true,
         'isImage': true,
         'sendNotification': false,
-        'senderId': widget.senderUser.phoneNumber,
-        'receiverId': widget.receiverUser.phoneNumber,
+        'senderId': widget.senderUser!.phoneNumber,
+        'receiverId': widget.receiverUser!.phoneNumber,
       },
     );
 
     FirestoreUser user =
-        await FirestoreService().getUserData(widget.receiverUser.id);
+        await FirestoreService().getUserData(widget.receiverUser!.id);
 
     // receviver
     FirebaseFirestore.instance
         .collection('chats')
-        .doc(widget.receiverUser.phoneNumber)
+        .doc(widget.receiverUser!.phoneNumber)
         .collection('messageTo')
-        .doc(widget.senderUser.phoneNumber)
+        .doc(widget.senderUser!.phoneNumber)
         .collection('messages')
         .add(
       {
@@ -1347,8 +1347,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         'isRead': false,
         'isImage': true,
         'sendNotification': user.status == 'Online' ? false : true,
-        'senderId': widget.senderUser.phoneNumber,
-        'receiverId': widget.receiverUser.phoneNumber,
+        'senderId': widget.senderUser!.phoneNumber,
+        'receiverId': widget.receiverUser!.phoneNumber,
       },
     );
 

@@ -374,12 +374,6 @@ class _EditProfilePageState extends ConsumerState<CreateProfilePage> {
       );
 
   getPhoto() {
-    // if (selectedPhoto == null) {
-    //   String url = storage.read(key: 'photoURL').toString();
-    //   return NetworkImage(url);
-    // } else {
-    //   return FileImage(selectedPhoto!);
-    // }
 
     if (selectedPhoto == null) {
       User? user = FirebaseAuth.instance.currentUser;
