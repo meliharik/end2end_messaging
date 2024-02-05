@@ -42,9 +42,7 @@ class _YonlendirmeState extends ConsumerState<Yonlendirme> {
         CupertinoPageRoute(builder: (context) => const EnterNumberPage()),
         (Route<dynamic> route) => false,
       );
-    } else {
-
-    }
+    } else {}
   }
 
   @override

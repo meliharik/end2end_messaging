@@ -59,6 +59,4 @@ class NotificationService {
     debugPrint('token: $token');
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
-
-  
 }

@@ -374,7 +374,6 @@ class _EditProfilePageState extends ConsumerState<CreateProfilePage> {
       );
 
   getPhoto() {
-
     if (selectedPhoto == null) {
       User? user = FirebaseAuth.instance.currentUser;
 

@@ -97,7 +97,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       message['gonderenId'],
     );
 
-    Navigator.of(GlobalcontextService.navigatorKey.currentContext!).pushAndRemoveUntil(
+    Navigator.of(GlobalcontextService.navigatorKey.currentContext!)
+        .pushAndRemoveUntil(
       CupertinoPageRoute(
         builder: (context) => const HomePage(),
       ),
