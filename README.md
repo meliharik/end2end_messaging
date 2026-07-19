@@ -1,13 +1,13 @@
 # end2end_messaging
 
-**RSA-encrypted mobile messaging for privacy.** A Flutter chat app where messages are encrypted on the device before they ever touch the network — the server only ever sees ciphertext.
+**RSA-encrypted mobile messaging for privacy.** A Flutter chat app where messages are encrypted on the device before they ever touch the network, so the server only ever sees ciphertext.
 
 ## Features
 
-- **End-to-end encryption** — RSA key pairs are generated on device; messages are encrypted with the recipient's public key and can only be decrypted locally.
-- **Phone-number auth** — onboarding with number entry and SMS verification (Firebase Auth).
-- **1:1 chats** — realtime conversations backed by Cloud Firestore.
-- **Profiles** — create and edit a profile, browse people, start a chat.
+- **End-to-end encryption.** RSA key pairs are generated on device. Messages are encrypted with the recipient's public key and can only be decrypted locally.
+- **Phone-number auth.** Onboarding with number entry and SMS verification through Firebase Auth.
+- **1:1 chats.** Realtime conversations backed by Cloud Firestore.
+- **Profiles.** Create and edit a profile, browse people, start a chat.
 
 ## Project structure
 
@@ -30,4 +30,4 @@ flutter run
 
 ## Stack
 
-Flutter · Firebase Auth · Cloud Firestore · RSA (on-device keygen)
+Flutter · Firebase Auth · Cloud Firestore · RSA with on-device key generation
