@@ -1,16 +1,33 @@
 # end2end_messaging
 
-A new Flutter project.
+**RSA-encrypted mobile messaging for privacy.** A Flutter chat app where messages are encrypted on the device before they ever touch the network — the server only ever sees ciphertext.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **End-to-end encryption** — RSA key pairs are generated on device; messages are encrypted with the recipient's public key and can only be decrypted locally.
+- **Phone-number auth** — onboarding with number entry and SMS verification (Firebase Auth).
+- **1:1 chats** — realtime conversations backed by Cloud Firestore.
+- **Profiles** — create and edit a profile, browse people, start a chat.
 
-A few resources to get you started if this is your first Flutter project:
+## Project structure
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
+lib/
+├── screens/auth/     # onboarding, enter/verify number, profile setup
+├── screens/          # chats list, chat screen, chat details, people
+├── models/           # user, message
+├── services/         # crypto + Firebase plumbing
+└── helpers/          # UI utilities
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Getting started
+
+```sh
+flutter pub get
+# add your own Firebase project (flutterfire configure)
+flutter run
+```
+
+## Stack
+
+Flutter · Firebase Auth · Cloud Firestore · RSA (on-device keygen)
